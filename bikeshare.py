@@ -1,5 +1,5 @@
 import time
-import pandas as pd
+import pandas
 import numpy as np
 
 CITY_DATA = { 'chicago': 'chicago.csv',
@@ -57,17 +57,17 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
     #load data for the city
-    df = pd.read_csv(CITY_DATA[city])
-    
+    df = pandas.read_csv(CITY_DATA[city])
+
     #convert start time to datetime
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
-    
+    df['Start Time'] = pandas.to_datetime(df['Start Time'])
+
     #extract month from start time
     df['month'] = df['Start Time'].dt.month
-    
+
     #extract day from the start time
     df['day_of_week'] = df['Start Time'].dt.weekday_name
-    
+
     #filter by month
     if month != 'all':
         #getting the number of the month
@@ -75,13 +75,13 @@ def load_data(city, month, day):
         month = months.index(month) + 1
         #create a new dataframe
         df = df[df['month'] == month]
-        
+
     #filter by day
     if day != 'all':
         #create a new dataframe
         df = df[df['day_of_week'] == day.title()]
-        
-    
+
+
     return df
 
 
@@ -195,7 +195,7 @@ def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
-        
+
         #displaying data depending on user request
         response_data= ''
         counter = 0
@@ -207,7 +207,7 @@ def main():
                 print(df.head())
             elif response_data not in ['yes','no']:
                 print("please enter an accpted response (yes or no)")
-                
+
 
     #ask user to show 5 more rows
         while response_data == 'yes':
